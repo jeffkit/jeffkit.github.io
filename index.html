@@ -1,18 +1,562 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeff Kit - Anyone Can Code</title>
+    <meta name="description" content="Jeff Kit 的个人主页 - Anyone Can Code，致力于让编程变得更简单，让任何人都能掌握编程技能。">
+    <meta name="keywords" content="Jeff Kit, 编程, 开发者, Anyone Can Code, GitHub, AI, 自动化">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Jeff Kit - Anyone Can Code">
+    <meta property="og:description" content="致力于让编程变得更简单，让任何人都能掌握编程技能">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jeffkit.github.io">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<div class="posts">
-  {% for post in site.posts %}
-    <article class="post">
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --background-color: #ffffff;
+            --surface-color: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
 
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
 
-      <div class="entry">
-        {{ post.excerpt }}
-      </div>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
 
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-    </article>
-  {% endfor %}
-</div>
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            background: var(--background-color);
+            border-radius: 2rem;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+        }
+
+        .name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .vision {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--surface-color);
+            border-radius: 1rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .vision-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-top: 0.5rem;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--surface-color);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid var(--border-color);
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Projects Section */
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--background-color);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: var(--surface-color);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .project-link.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .project-link.primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .project-link.secondary {
+            background: var(--surface-color);
+            color: var(--text-secondary);
+            border-color: var(--border-color);
+        }
+
+        .project-link.secondary:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        /* About Section */
+        .about {
+            background: var(--background-color);
+            border-radius: 2rem;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .about-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill {
+            background: var(--surface-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            border: 2px solid var(--border-color);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: white;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header {
+                padding: 2rem;
+                margin-bottom: 3rem;
+            }
+
+            .name {
+                font-size: 2rem;
+            }
+
+            .vision {
+                font-size: 1.25rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-links {
+                flex-direction: column;
+            }
+
+            .social-links {
+                gap: 0.75rem;
+            }
+
+            .social-link {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header,
+        .project-card,
+        .about {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .project-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .project-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="avatar">JK</div>
+            <h1 class="name">Jeff Kit</h1>
+            <p class="tagline">软件开发者 · AI 技术爱好者 · 开源贡献者</p>
+            <div class="vision">
+                "Anyone Can Code"
+                <div class="vision-subtitle">致敬 "Anyone Can Cook" - 让编程变得更简单，让任何人都能掌握编程技能</div>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://github.com/jeffkit" class="social-link" target="_blank" rel="noopener" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:jeff@example.com" class="social-link" title="邮箱">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://twitter.com/jeffkit" class="social-link" target="_blank" rel="noopener" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://linkedin.com/in/jeffkit" class="social-link" target="_blank" rel="noopener" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </header>
+
+        <!-- About Section -->
+        <section class="about">
+            <div class="about-content">
+                <h2 class="section-title" style="color: var(--text-primary); text-shadow: none;">关于我</h2>
+                <p class="about-text">
+                    我是一名充满热情的软件开发者，专注于 AI、云计算和开源项目。我相信技术应该让生活变得更美好，
+                    编程不应该是少数人的特权。通过创建易用的工具和详细的文档，我希望能够降低编程的门槛，
+                    让更多人能够享受创造的乐趣。
+                </p>
+                <p class="about-text">
+                    <strong>"Anyone Can Code"</strong> 是我的愿景，灵感来自于皮克斯动画《料理鼠王》中的经典台词 "Anyone Can Cook"。
+                    就像烹饪一样，编程也应该是每个人都能够学会和享受的技能。
+                </p>
+                
+                <div class="skills">
+                    <span class="skill">JavaScript</span>
+                    <span class="skill">TypeScript</span>
+                    <span class="skill">Python</span>
+                    <span class="skill">React</span>
+                    <span class="skill">Node.js</span>
+                    <span class="skill">AI/ML</span>
+                    <span class="skill">云计算</span>
+                    <span class="skill">开源项目</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section">
+            <h2 class="section-title">主要项目</h2>
+            <div class="projects-grid">
+                <!-- MCP User Feedback Server -->
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="project-title">MCP User Feedback Server</h3>
+                    <p class="project-description">
+                        一个用于人机交互的 Model Context Protocol 服务器，通过系统对话框实现与 AI 代理的交互。
+                        支持跨平台部署，提供简单易用的 API 接口，让 AI 应用能够轻松获取用户反馈。
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">MCP</span>
+                        <span class="tag">AI</span>
+                        <span class="tag">对话系统</span>
+                        <span class="tag">跨平台</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/jeffkit/mcp-user-feedback-server" class="project-link primary" target="_blank" rel="noopener">
+                            <i class="fab fa-github"></i>
+                            查看代码
+                        </a>
+                        <a href="https://jeffkit.github.io/mcp-user-feedback-server/" class="project-link secondary" target="_blank" rel="noopener">
+                            <i class="fas fa-external-link-alt"></i>
+                            在线文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PageOperator -->
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="project-title">PageOperator</h3>
+                    <p class="project-description">
+                        智能页面自动化解决方案，提供两个独立的 SDK：PageManipulator（基础页面操作）和 PageAgent（AI 增强的智能代理）。
+                        让页面自动化变得简单而智能，支持自然语言指令和精确的页面操作。
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">AI Agent</span>
+                        <span class="tag">自动化</span>
+                        <span class="tag">Web</span>
+                        <span class="tag">Next.js</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/jeffkit/page-operator" class="project-link primary" target="_blank" rel="noopener">
+                            <i class="fab fa-github"></i>
+                            查看代码
+                        </a>
+                        <a href="https://v0-page-operator.vercel.app" class="project-link secondary" target="_blank" rel="noopener">
+                            <i class="fas fa-external-link-alt"></i>
+                            在线演示
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Jeff Kit. 用 ❤️ 和 ☕ 制作</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+            托管在 <a href="https://pages.github.com/" style="color: white; text-decoration: none;">GitHub Pages</a> • 
+            使用默认域名 jeffkit.github.io
+        </p>
+    </footer>
+
+    <script>
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll for any anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Add loading animation to project cards
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationDelay = '0s';
+                        entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.project-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
